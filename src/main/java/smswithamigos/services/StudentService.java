@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import smswithamigos.data.models.Student;
+import smswithamigos.exception.StudentAlreadyExistException;
 import smswithamigos.repository.StudentRepository;
 
 import java.time.LocalDate;
@@ -22,10 +23,10 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public void addNewStudent(Student student) {
+    public void addNewStudent(Student student)throws StudentAlreadyExistException {
         Optional<Student> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
         if (studentByEmail.isPresent()) {
-            throw new IllegalStateException("email already taken");
+            throw new StudentAlreadyExistException("email already taken");
         } else {
             studentRepository.save(student);
         }

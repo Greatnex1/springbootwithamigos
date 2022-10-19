@@ -22,6 +22,8 @@ public class Student {
     private String name;
     private  String email;
     private LocalDate dob;
+    private Gender gender;
+
     @Transient
     private  Integer age;
 
@@ -32,10 +34,10 @@ public class Student {
         this.dob = dob;
     }
 
-    public Student(String name, String email, LocalDate dob) {
+    public Student(String name, String email,LocalDate dob, Gender gender) {
         this.name = name;
         this.email = email;
-        this.dob = dob;
+        this.gender = gender;
     }
 
     public Student() {

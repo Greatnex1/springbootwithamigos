@@ -3,6 +3,7 @@ package smswithamigos.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import smswithamigos.data.models.Gender;
 import smswithamigos.data.models.Student;
 import smswithamigos.repository.StudentRepository;
 import smswithamigos.repository.StudentRepository;
@@ -27,12 +28,14 @@ CommandLineRunner commandLineRunner (
 
                 "Mariam",
                 "may@gmail.com",
-                LocalDate.of(2020, JANUARY,21)
+                LocalDate.of(2020, JANUARY,21),
+                Gender.FEMALE
         );
         Student alex = new Student(
                 "Alex",
                 "alex@gmail.com",
-                LocalDate.of(2001, JANUARY,3)
+                LocalDate.of(2001, JANUARY,3),
+                Gender.FEMALE
 
         );
         repository.saveAll(List.of(mary,alex)

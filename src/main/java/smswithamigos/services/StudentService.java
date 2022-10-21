@@ -1,5 +1,6 @@
 package smswithamigos.services;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,18 +16,20 @@ import java.util.Optional;
 
 
 @Service
+@AllArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
 
-    @Autowired
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+//    @Autowired
+//    public StudentService(StudentRepository studentRepository) {
+//        this.studentRepository = studentRepository;
+//    }
 
     public void addNewStudent(Student student)throws StudentAlreadyExistException {
-        Optional<Student> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
-        if (studentByEmail.isPresent()) {
-            throw new StudentAlreadyExistException("email already taken");
+        Boolean studentByEmail = studentRepository.fetchStudentByEmail(student.getEmail());
+       // Optional<Student> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
+        if (studentByEmail) {
+            throw new StudentAlreadyExistException("student with email " + student.getEmail() + " already exists");
         } else {
             studentRepository.save(student);
         }

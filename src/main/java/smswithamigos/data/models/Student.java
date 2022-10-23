@@ -1,14 +1,15 @@
 package smswithamigos.data.models;
 
 import lombok.*;
-
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
 @ToString
 @Table
+
 public class Student {
     @Id
     @SequenceGenerator(
@@ -20,24 +21,27 @@ public class Student {
     generator = "student_sequence")
     private Long id;
     private String name;
-    private  String email;
     private LocalDate dob;
-    private Gender gender;
+    @Email
+    private  String email;
+
+//    private Gender gender;
 
     @Transient
     private  Integer age;
 
     public Student(Long id, String name, String email, LocalDate dob) {
-        this.id = id;
+        this.id=id;
         this.name = name;
         this.email = email;
         this.dob = dob;
     }
 
-    public Student(String name, String email,LocalDate dob, Gender gender) {
+    public Student(String name, String email,LocalDate dob) {
         this.name = name;
         this.email = email;
-        this.gender = gender;
+        this.dob = dob;
+//        this.gender = gender;
     }
 
     public Student() {
@@ -53,7 +57,7 @@ public class Student {
     }
 
     public Integer getAge() {
-        return Period.between (this.dob,LocalDate.now()).getYears();
+        return Period.between(this.dob,LocalDate.now()).getYears();
     }
 
     public Long getId() {
@@ -82,8 +86,7 @@ public class Student {
 
 
 
-
-  //  public Student(String aLex, String s, LocalDate of, int i) {
+//  public Student(String aLex, String s, LocalDate of, int i) {
   //
     //
     //    public Integer getAge() {

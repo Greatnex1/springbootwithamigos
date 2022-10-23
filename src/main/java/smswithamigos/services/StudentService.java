@@ -21,15 +21,14 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
 //    @Autowired
-//    public StudentService(StudentRepository studentRepository) {
-//        this.studentRepository = studentRepository;
-//    }
+//   public StudentService(StudentRepository studentRepository) {
+//       this.studentRepository = studentRepository;
+//  }
 
-    public void addNewStudent(Student student)throws StudentAlreadyExistException {
-        Boolean studentByEmail = studentRepository.fetchStudentByEmail(student.getEmail());
-       // Optional<Student> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
-        if (studentByEmail) {
-            throw new StudentAlreadyExistException("student with email " + student.getEmail() + " already exists");
+    public void addNewStudent(Student student){
+       Optional<Student> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
+        if (studentByEmail.isPresent()) {
+            throw new IllegalStateException ("student with email " + student.getEmail() + " already exists");
         } else {
             studentRepository.save(student);
         }
@@ -41,8 +40,8 @@ public class StudentService {
     }
 
     public void deleteStudent(Long studentId) {
-        boolean exist = studentRepository.existsById(studentId);
-        if (!exist) {
+        var exist = studentRepository.existsById(studentId);
+        if (!exist){
             throw new IllegalStateException("student with id " + studentId + " does not exist");
         } else {
             studentRepository.deleteById(studentId);

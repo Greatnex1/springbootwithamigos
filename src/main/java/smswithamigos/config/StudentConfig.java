@@ -24,18 +24,14 @@ CommandLineRunner commandLineRunner (
     return args -> {
 
         Student mary = new Student(
-
-
                 "Mariam",
                 "may@gmail.com",
-                LocalDate.of(2020, JANUARY,21),
-                Gender.FEMALE
+                LocalDate.of(1990,Month.APRIL,2)
         );
         Student alex = new Student(
                 "Alex",
                 "alex@gmail.com",
-                LocalDate.of(2001, JANUARY,3),
-                Gender.FEMALE
+                LocalDate.of(1990, Month.JANUARY,22)
 
         );
         repository.saveAll(List.of(mary,alex)

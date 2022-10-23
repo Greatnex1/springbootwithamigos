@@ -11,13 +11,13 @@ import java.util.List;
 @RequestMapping(path = "api/v1/student")
 public class SchoolController {
 private final StudentService studentService;
-
+@Autowired
     public SchoolController(StudentService studentService) {
         this.studentService = studentService;
     }
 
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public void registerNewStudent(@RequestBody Student student){
         studentService.addNewStudent(student);
     }

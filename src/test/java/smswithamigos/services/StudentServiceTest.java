@@ -1,5 +1,6 @@
 package smswithamigos.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -27,8 +28,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-//@SpringBootTest
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+//@ExtendWith(MockitoExtension.class)
+@Slf4j
 class StudentServiceTest {
     @Mock
     private StudentRepository studentRepository;
@@ -49,12 +51,14 @@ studentService = new StudentService(studentRepository);
 //    }
 
     @Test
+
     void addNewStudentTest() {
     Student  student = new Student(
+            1L,
                "Joy", "joy@gmail.com",
-            LocalDate.of(2020, JANUARY,21),
-            Gender.FEMALE);
+            LocalDate.of(2020, JANUARY,21));
        studentService.addNewStudent(student);
+       log.info("a new student registered -> {}",student);
         ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
         verify(studentRepository).save(studentArgumentCaptor.capture());
 
@@ -72,29 +76,41 @@ studentService = new StudentService(studentRepository);
         verify(studentRepository).findAll();
     }
 
-//    @Test
-//    void deleteStudent() {
-// assertThat(studentService.deleteStudent());
-//
-//    }
-    //assertThat(productService.deleteProduct(response.getProductId()));
     @Test
-    void willThrowExceptionWhenEmailIsAlreadyTaken(){
-        Student  student = new Student(
+    void deleteStudent() {
+//        studentService.deleteStudent(1L);
+//
+//        verify(studentRepository).deleteStudentById(1L);
+
+        Student  student1= new Student(
+                1L,
                 "Joy", "joy@gmail.com",
-                LocalDate.of(2020, JANUARY,21),
-                Gender.FEMALE);
+                LocalDate.of(2020, JANUARY,21));
+        studentService.addNewStudent(student1);
+        studentRepository.save(student1);
+        log.info(" Student email -> {} Student id -> {}",student1.getEmail(), student1.getId());
+         studentRepository.existsById(1L);
+         assertThat(student1).isNull();
 
-       given  (studentRepository.fetchStudentByEmail(student.getEmail())).willReturn(true);
 
-     //  assertTrue(savedEmail);
-
-        assertThatThrownBy(()-> studentService.addNewStudent(student))
-                .isInstanceOf(StudentAlreadyExistException.class)
-
-                .hasMessageContaining("student with email " + student.getEmail() + " already exists");
-verify(studentRepository,never()).save(any());
     }
+//    @Test
+//    void willThrowExceptionWhenEmailIsAlreadyTaken(){
+//        Student  student = new Student(
+//                "Joy", "joy@gmail.com",
+//                LocalDate.of(2020, JANUARY,21),
+//                Gender.FEMALE);
+//
+//       given  (studentRepository.fetchStudentByEmail(student.getEmail())).willReturn(true);
+//
+//     //  assertTrue(savedEmail);
+//
+//        assertThatThrownBy(()-> studentService.addNewStudent(student))
+//                .isInstanceOf(StudentAlreadyExistException.class)
+//
+//                .hasMessageContaining("student with email " + student.getEmail() + " already exists");
+//verify(studentRepository,never()).save(any());
+//    }
 
     @Test
     @Disabled

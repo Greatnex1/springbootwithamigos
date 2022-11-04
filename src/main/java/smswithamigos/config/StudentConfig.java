@@ -34,8 +34,8 @@ CommandLineRunner commandLineRunner (
                 LocalDate.of(1990, Month.JANUARY,22)
 
         );
-        repository.saveAll(List.of(mary,alex)
-        );
+      //  repository.saveAll(List.of(mary,alex)
+      //  );
     };
 }
         }

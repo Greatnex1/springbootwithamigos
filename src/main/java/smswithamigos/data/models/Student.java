@@ -12,13 +12,14 @@ import java.time.Period;
 
 public class Student {
     @Id
-    @SequenceGenerator(
+/*    @SequenceGenerator(
             name = "student_sequence",
             sequenceName = "student_sequence",
             allocationSize = 1
-    )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-    generator = "student_sequence")
+    )*/
+    /*@GeneratedValue(strategy = GenerationType.AUTO,
+    generator = "student_sequence")*/
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private LocalDate dob;

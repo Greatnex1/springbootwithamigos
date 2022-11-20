@@ -8,8 +8,6 @@ import smswithamigos.data.models.Student;
 import smswithamigos.exception.StudentAlreadyExistException;
 import smswithamigos.repository.StudentRepository;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -51,8 +49,8 @@ public class StudentService {
 
     @Transactional
     public void updateStudent(Long studentId, String name, String email) {
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException(
-                ("student with id " + studentId + " does not exist")));
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException
+                ("student with id " + studentId + " does not exist"));
         if (name != null && name.length() > 0 && !Objects.equals(student.getName(), name)) {
             student.setName(name);
         }
